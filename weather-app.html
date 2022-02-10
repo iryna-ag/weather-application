@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" href="src/styles.css" />
+
+    <title>Weather</title>
+    </head>
+<style>
+    body {
+  margin: 70px;
+  border: 100px;
+  background-image: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+}
+.bg-image {
+  background-image: url("https://images.pexels.com/photos/19670/pexels-photo.jpg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.bg-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.weather-app {
+  border: 1px solid black;
+  padding: 30px;
+  margin: 40px auto;
+  border-radius: 8px;
+  max-width: 1000px;
+}
+.enter {
+  width: 400px;
+  height: 60px;
+  font-weight: bold;
+  color: black;
+  font-size: 20px;
+}
+.search {
+  width: 180px;
+  height: 35px;
+  color: purple;
+  font-weight: bold;
+  font-size: 15px;
+  text-align: center;
+}
+button {
+  width: 180px;
+  height: 35px;
+  color: purple;
+  font-size: 15px;
+  text-align: center;
+  position: relative;
+  right: -10px;
+}
+h1 {
+  padding: 5px;
+  font-family: cursive;
+  color: darkgreen;
+  font-weight: normal;
+}
+h2,
+h3 {
+  font-size: 20px;
+  margin: 0;
+  color: grey;
+  font-size: 17px;
+}
+
+.data-entry {
+  position: fixed;
+  right: 550px;
+  top: 200px;
+  text-align: center;
+}
+
+.temperature {
+  color: black;
+  font-weight: 450;
+  font-size: 38px;
+}
+.units {
+  position: relative;
+  top: -20px;
+  font-weight: bold;
+  color: teal;
+  font-size: 20px;
+  text-decoration: none;
+}
+ul {
+  margin: 0 0 10px;
+  padding: 0;
+  padding-top: 40px;
+}
+li {
+  color: grey;
+  font-family: italic;
+  font-size: 20px;
+  font-weight: 100;
+  height: 30px;
+  line-height: 1;
+  list-style: none;
+}
+
+.locations {
+  display: block;
+  font-family: Georgia, "Times New Roman", Times, serif;
+  width: 300px;
+  height: 50px;
+  color: teal;
+  word-spacing: 25px;
+  text-align: left;
+}
+a {
+  color: blue;
+  text-decoration: underline;
+  outline: 20px;
+}
+</style>
+
+  <body>
+   <div class="weather-app">
+   <form class="search-form" id="search-form">
+   <input 
+      class="enter" 
+      type="text" 
+      placeholder="Enter Location" 
+      autocomplete="off" 
+      autofocus="on" 
+      id="search-text-input" />
+
+    <input class="search" 
+      type="submit" 
+      value="Search" />
+      
+      <button id="button-current">
+          Current Location
+      </button> 
+    </form>
+  
+    <h1 id="city"> City Name </h1>
+    <h2 id="date"> Thursday 21:16 </h2> 
+    <h3 id="temperature-description"></h3>
+        </ br>
+     
+    
+<div class="row">
+<div class="col-1">
+  <div class="data-entry">
+       
+      <span class="temperature" id="temperature">degrees°</span> 
+          <span class="units">
+              <a href="#" id="celsius-link">°C</a> |
+              <a href="#" id="fahrenheit-link">°F</a>
+            </span>
+            <ul>
+                <li>Humidity: <span id="humidity"></span>%</li>
+                <li>Wind: <span id="wind"></span> km/h</li>
+              </ul>
+  </div>
+</div>
+</div>
+    
+    </br>
+      <form>
+      <input
+        class="locations"
+        type="text"
+        placeholder=" Sunday  +16°c/61°f Sun"
+      />
+      <input
+        class="locations"
+        type="text"
+        placeholder=" Monday  +11°c/52°f Sun"
+      />
+      <input
+        class="locations"
+        type="text"
+        placeholder=" Tuesday  +7°c/45°f Rain"
+      />
+      <input
+        class="locations"
+        type="text"
+        placeholder="Wednesday +4°c/39°f Clouds"
+      />
+      <input
+        class="locations"
+        type="text"
+        placeholder=" Thursday +10°c/50°f Clouds"
+      />
+    </form>
+<div class="bg-image">
+  <div class="bg-text">
+</div>
+<div>
+<a href="https://github.com/iryna-ag/weather-app.git">Coded by</a> Iryna Agafonov
+</div>
+
+
+<script src="src/index.js"> 
+    function formatDate(date) {
+  let hours = date.getHours();
+  if (hours < 10) {
+    hours = `0${hours}`;
+  }
+  let minutes = date.getMinutes();
+  if (minutes < 10) {
+    minutes = `0${minutes}`;
+  }
+
+  let dayIndex = date.getDay();
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
+  let day = days[dayIndex];
+
+  return `${day} ${hours}:${minutes}`;
+}
+
+let dateElement = document.querySelector("#date");
+let currentTime = new Date();
+dateElement.innerHTML = formatDate(currentTime);
+
+let searchForm = document.querySelector("#search-form");
+searchForm.addEventListener("submit", search);
+
+function convertToFahrenheit(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = 59;
+}
+
+function convertToCelsius(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = 15;
+}
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", convertToFahrenheit);
+
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", convertToCelsius);
+
+function showTemperature(response) {
+  document.querySelector("#city").innerHTML = response.data.name;
+  document.querySelector("#temperature").innerHTML = Math.round(
+    response.data.main.temp
+  );
+
+  document.querySelector("#humidity").innerHTML = response.data.main.humidity;
+  document.querySelector("#wind").innerHTML = Math.round(
+    response.data.wind.speed
+  );
+  document.querySelector("#temperature-description").innerHTML =
+    response.data.weather[0].main;
+}
+
+function searchCity(city) {
+  let apiKey = "8a111d59281834c9e3bba690673ab943";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(showTemperature);
+}
+
+function search(event) {
+  event.preventDefault();
+  let city = document.querySelector("#search-text-input").value;
+  searchCity(city);
+}
+
+searchCity("City Name");
+
+    </script>
+  
+</body>
+</html>
